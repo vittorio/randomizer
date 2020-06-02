@@ -1,0 +1,21 @@
+
+.choiceInput {
+  padding: 10px 15px;
+  font-size: 30px;
+}
+
+.addBtn {
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 17px;
+  margin-left: 10px;
+
+}
+.choiceInput,
+.addBtn {
+  border: 1px solid #80808087;
+  border-radius: 5px;
+}
+.inputContainer {
+  display: flex;
+}

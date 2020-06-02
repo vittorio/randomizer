@@ -1,45 +1,49 @@
-import React, {useState, useEffect, useCallback} from "react";
-import "./styles/Choice.css"
+import React, {useState, useCallback} from "react";
+import "./styles/ChoicesList.css"
 
-const Choice = ({value}) => {
-  const [randomEl, setRandomEl] = useState("");
+const ChoicesList = ({choices, removeChoice}) => {
+  const [randomChoice, setRandomChoice] = useState("");
 
 
-  const handleClick = useCallback(  () => {
-    let choosedEl = value[Math.floor(Math.random() * value.length)];
+  const handleClick = useCallback(() => {
+    const chosenEl = choices[Math.floor(Math.random() * choices.length)];
 
-    setRandomEl(choosedEl)
-  }, [value, setRandomEl]);
+    setRandomChoice(chosenEl)
+  }, [choices, setRandomChoice]);
 
   return (
     <div>
-      <ol>
+      <ol className="choicesList">
         {
-          value.map(el => (
+          choices.map(choice => (
             //key is not implemented yet
-            randomEl == el ?
-              <div className="highlighted">
+            randomChoice === choice ?
+              <div className="highlighted" key={choice}>
+
                 <li>
-                  {randomEl}
+                  {randomChoice}
                 </li>
-                <i className="em em-clap" aria-role="presentation" aria-label="CLAPPING HANDS SIGN"></i>
+                <i className="em em-clap" aria-role="presentation" aria-label="CLAPPING HANDS SIGN"/>
+                <input type="checkbox"  onChange={() => removeChoice(choice)}/>
               </div>
               :
-              <li>{el}</li>
+
+              <li key={choice}>
+                {choice}
+                <input type="checkbox" onChange={() => removeChoice(choice)}/>
+              </li>
           ))
         }
 
       </ol>
       <div className="btnContainer">
         {
-          value.length >= 2
-            ?
-            <button className="chooseBtn" type="button" onClick={handleClick}>Выбрать</button>
-            :
-            ""
+          choices.length >= 2
+          &&
+          <button className="chooseBtn" type="button" onClick={handleClick}>Выбрать</button>
         }
       </div>
     </div>
   )
 };
-export default Choice
+export default ChoicesList

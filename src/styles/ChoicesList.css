@@ -1,8 +1,8 @@
-ol {
+.choicesList {
   font-size: 28px;
 }
 
-li {
+.choicesList li {
   margin-bottom: 10px;
 }
 
@@ -18,7 +18,6 @@ li {
 }
 
 .highlighted {
-  /*color: #ff7700bf;*/
   display: flex;
   animation: blinker 1s linear infinite;
 }

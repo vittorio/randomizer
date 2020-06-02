@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useCallback, useEffect, useState} from 'react';
+import './styles/App.css';
+import AddChoice from "./AddChoice";
+import ChoicesList from "./ChoicesList";
 
-function App() {
+const App = () => {
+  const CHOICES_LS_KEY = "choices";
+  const [choices, setChoices] = useState([]);
+
+  useEffect(() => {
+    const choicesFromLS = localStorage.getItem(CHOICES_LS_KEY);
+
+    setChoices(JSON.parse(choicesFromLS) || [])
+  }, [CHOICES_LS_KEY]);
+
+  const addNewChoice = useCallback((newChoice) => {
+      const updatedChoices = [...choices, newChoice];
+
+      setChoices(updatedChoices);
+      localStorage.setItem(CHOICES_LS_KEY, JSON.stringify(updatedChoices))
+
+  }, [choices]);
+
+  const removeChoice = useCallback((choice) => {
+    const indexToRemove = choices.findIndex((el) => (
+      el === choice
+    ))
+      const updatedChoices = [...choices]
+        updatedChoices.splice(indexToRemove, 1)
+    setChoices(updatedChoices);
+    localStorage.setItem(CHOICES_LS_KEY, JSON.stringify(updatedChoices))
+
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 className="header">Рандомайзер</h1>
+      <div className="container">
+        <AddChoice onAddBtnClick={addNewChoice}/>
+        <ChoicesList choices={choices} removeChoice={removeChoice}/>
+      </div>
+    </>
   );
-}
+};
 
 export default App;

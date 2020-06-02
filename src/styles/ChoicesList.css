@@ -1,0 +1,34 @@
+ol {
+  font-size: 28px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.btnContainer {
+  text-align: center;
+}
+
+.chooseBtn {
+  padding: 9px 21px;
+  background-color: #ff810052;
+  border-radius: 26px;
+  font-size: 18px;
+}
+
+.highlighted {
+  /*color: #ff7700bf;*/
+  display: flex;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.highlighted li {
+  margin-right: 5px;
+  align-items: center;
+}

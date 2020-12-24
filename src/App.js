@@ -14,10 +14,10 @@ const App = () => {
   }, [CHOICES_LS_KEY]);
 
   const addNewChoice = useCallback((newChoice) => {
-      const updatedChoices = [...choices, newChoice];
+    const updatedChoices = [...choices, newChoice];
 
-      setChoices(updatedChoices);
-      localStorage.setItem(CHOICES_LS_KEY, JSON.stringify(updatedChoices))
+    setChoices(updatedChoices);
+    localStorage.setItem(CHOICES_LS_KEY, JSON.stringify(updatedChoices))
 
   }, [choices]);
 
@@ -25,21 +25,36 @@ const App = () => {
     const indexToRemove = choices.findIndex((el) => (
       el === choice
     ))
-      const updatedChoices = [...choices]
-        updatedChoices.splice(indexToRemove, 1)
+    const updatedChoices = [...choices]
+    updatedChoices.splice(indexToRemove, 1)
     setChoices(updatedChoices);
     localStorage.setItem(CHOICES_LS_KEY, JSON.stringify(updatedChoices))
-
   });
 
+
+  const [randomChoice, setRandomChoice] = useState("");
+
+
+  const selectRandomChoice = useCallback(() => {
+    const chosenEl = choices[Math.floor(Math.random() * choices.length)];
+
+    setRandomChoice(chosenEl)
+  }, [choices, setRandomChoice]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      e.keyCode === 32 && selectRandomChoice()
+    })
+  }, [document])
+
   return (
-    <>
+    <div onKeyPress={selectRandomChoice} tabIndex="0">
       <h1 className="header">Рандомайзер</h1>
       <div className="container">
         <AddChoice onAddBtnClick={addNewChoice}/>
-        <ChoicesList choices={choices} removeChoice={removeChoice}/>
+        <ChoicesList choices={choices} removeChoice={removeChoice} randomChoice={randomChoice}/>
       </div>
-    </>
+    </div>
   );
 };
 

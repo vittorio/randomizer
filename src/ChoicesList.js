@@ -1,25 +1,15 @@
 import React, {useState, useCallback} from "react";
 import "./styles/ChoicesList.css"
 
-const ChoicesList = ({choices, removeChoice}) => {
-  const [randomChoice, setRandomChoice] = useState("");
-
-
-  const handleClick = useCallback(() => {
-    const chosenEl = choices[Math.floor(Math.random() * choices.length)];
-
-    setRandomChoice(chosenEl)
-  }, [choices, setRandomChoice]);
-
+const ChoicesList = ({choices, removeChoice, onSelect, randomChoice}) => {
   return (
-    <div>
+    <div tabIndex="0">
       <ol className="choicesList">
         {
           choices.map(choice => (
             //key is not implemented yet
             randomChoice === choice ?
               <div className="highlighted" key={choice}>
-
                 <li>
                   {randomChoice}
                 </li>
@@ -40,7 +30,7 @@ const ChoicesList = ({choices, removeChoice}) => {
         {
           choices.length >= 2
           &&
-          <button className="chooseBtn" type="button" onClick={handleClick}>Выбрать</button>
+          <button className="chooseBtn" type="button" onClick={onSelect}>Выбрать</button>
         }
       </div>
     </div>

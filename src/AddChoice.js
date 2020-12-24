@@ -5,7 +5,9 @@ import './styles/AddChoice.css'
 const AddChoice = ({onAddBtnClick}) => {
   const inputRef = useRef(null);
 
-  const handleClick = useCallback(() => {
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault()
+
     const inputEl = inputRef.current;
 
     if (inputEl && inputEl.value.length) {
@@ -16,10 +18,10 @@ const AddChoice = ({onAddBtnClick}) => {
 
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="inputContainer">
-        <input className="choiceInput" type="text" ref={inputRef}/>
-        <button className="addBtn" type='button' onClick={handleClick}>Добавить</button>
+        <input className="choiceInput" onKeyPress={e => e.stopPropagation()} type="text" ref={inputRef}/>
+        <button className="addBtn" type='submit'>Добавить</button>
       </div>
     </form>
   )
